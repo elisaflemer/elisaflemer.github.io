@@ -1,20 +1,31 @@
 main {
 }
 
+td {
+    font-size: 1vw;
+}
+
 .suffix {
     width: 2vw;
 }
 
 .determiner, .adjective {
-    width: 2vw;
+    width: 3vw;
     margin: 0 1vw 0 0;
 }
 
 .table-row-title {
-    width: 10vw;
+    width: 8vw;
 }
 
 #explanation {
     margin: 4vh 0;
+}
+
+.btn-primary, .btn-primary:focus {
+    background-color: #FECE00;
+    margin: 2vh 0;
+    color: black;
+    border-color: transparent;
 }
 

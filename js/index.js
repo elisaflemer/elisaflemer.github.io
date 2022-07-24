@@ -39,7 +39,7 @@ const suffixDeclensions = {
         "nom": ["", "", "", ""],
         "acc": ["", "", "", ""],
         "dat": ["", "", "", "n"],
-        "gen": ["es", "", "s", ""],
+        "gen": ["es", "", "es", ""],
     },
     "mixed": {
         "nom": ["", "", "", ""],
@@ -50,7 +50,7 @@ const suffixDeclensions = {
     "weak": {
         "nom": ["", "", "", ""],
         "acc": ["", "", "", ""],
-        "dat": ["", "", "", "n"],
+        "dat": ["", "", "", ""],
         "gen": ["s", "", "es", ""],
     }
 }
@@ -75,28 +75,28 @@ function buildTable(declensionType, determiner, adjective, nouns) {
             </thead>
             <tbody>`
         if(declensionType === "weak") {
-            ["Nominative", "Accusative", "Dative", "Genitive"].forEach(grammarCase => {
+            ["nominative", "accusative", "dative", "genitive"].forEach(grammarCase => {
                 html += `
                 <tr>
                     <th scope="row" class="table-row-title">${grammarCase}</th>
                 `
                 nouns.forEach(noun => {
                     html += `
-                    <td>${adjective}<input class="${declensionType} adjective nom">${noun}<input class="${declensionType} suffix nom"></td>
+                    <td>${adjective}<input class="${declensionType} adjective ${grammarCase.substring(0, 3)}">${noun}<input class="${declensionType} suffix ${grammarCase.substring(0, 3)}"></td>
                     `
                 });
                 html += "</tr>"
             });
 
         } else {
-            ["Nominative", "Accusative", "Dative", "Genitive"].forEach(grammarCase => {
+            ["nominative", "accusative", "dative", "genitive"].forEach(grammarCase => {
                 html += `
                 <tr>
                     <th scope="row" class="table-row-title">${grammarCase}</th>
                 `
                 nouns.forEach(noun => {
                     html += `
-                    <td>${determiner}<input class="${declensionType} determiner nom">${adjective}<input class="${declensionType} adjective nom">${noun}<input class="${declensionType} suffix nom"></td>
+                    <td>${determiner}<input class="${declensionType} determiner ${grammarCase.substring(0, 3)}">${adjective}<input class="${declensionType} adjective ${grammarCase.substring(0, 3)}">${noun}<input class="${declensionType} suffix ${grammarCase.substring(0, 3)}"></td>
                     `
                 });
                 html += "</tr>"
@@ -111,7 +111,6 @@ function checkAllTables() {
     })
 }
 
-
 function checkTable(declensionType) {
     ["nom", "acc", "dat", "gen"].forEach(grammarCase => {
         let determiners = null;
@@ -122,6 +121,8 @@ function checkTable(declensionType) {
         let suffixes = Array.from($(`.${declensionType}.${grammarCase}.suffix`));
         for(let i = 0; i < adjectives.length; i++) {
             if(declensionType !== "weak") {
+                console.log("input: " + determiners[i].value)
+                console.log("answer: " + determinerDeclensions[declensionType][grammarCase][i])
                 if(determiners[i].value === determinerDeclensions[declensionType][grammarCase][i]) {
                     $(determiners[i]).css({"background-color": "lightgreen", "border-color": "transparent"})
                 } else {
